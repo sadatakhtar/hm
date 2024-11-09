@@ -1,5 +1,6 @@
-name: CI
+name: Frontend CI Pipeline
 
+# Triggers the workflow on pushes to the main branch and on pull requests to main
 on:
   push:
     branches:
@@ -9,20 +10,29 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
+    name: Build and Test Frontend
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Checkout the frontend code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # Replace with the Node.js version your project uses
 
-    - name: Install dependencies
-      run: npm install
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
 
-    - name: Run tests
-      run: npm test
+      # Step 4: Run tests
+      - name: Run tests
+        run: npm test -- --watchAll=false
+
+      # Step 5: Build the application
+      - name: Build frontend
+        run: npm run build
