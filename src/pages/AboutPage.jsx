@@ -6,7 +6,7 @@ function AboutPage() {
   const navigate = useNavigate();
 
   const handleBtn = () => {
-    navigate("/");
+    navigate("/home");
   };
   return (
     <div>
